@@ -1,7 +1,6 @@
 /.bin
 /build
 /vendor
-/view/v2
 /theme
 memory::
 composer.lock

@@ -1,7 +1,39 @@
-O:8:"stdClass":7:{s:4:"file";s:21:"block/footer-col-3.md";s:7:"section";s:0:"";s:5:"level";i:0;s:8:"internal";b:1;s:7:"tocable";b:0;s:5:"views";a:1:{s:4:"main";a:2:{s:8:"template";s:23:"anax/v2/article/default";s:4:"data";a:2:{s:7:"content";s:139:"<h4>Footer col 3</h4>
+O:8:"stdClass":7:{s:4:"file";s:21:"block/footer-col-3.md";s:7:"section";s:0:"";s:5:"level";i:0;s:8:"internal";b:1;s:7:"tocable";b:0;s:5:"views";a:1:{s:4:"main";a:2:{s:8:"template";s:23:"anax/v2/article/default";s:4:"data";a:2:{s:7:"content";s:947:"<h4>Me-sidor i tidigare kurser</h4>
 
-<p>Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.</p>
-";s:7:"excerpt";s:139:"<h4>Footer col 3</h4>
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/htmlphp/me/kmom06/me6/me.php">HTMLPHP</a></p>
 
-<p>Med brödtext i ett stycke som säger något trevligt om just detta block, eller kanske en lista av länkar.</p>
-";}}}s:11:"frontmatter";a:1:{s:5:"title";s:12:"Footer col 3";}}
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/python/me/redovisa/me.html">Python</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/javascript1/me/redovisa/me.php">Javascript</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/design/me/redovisa/htdocs/">Design</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/oopython/me/flask/app.cgi/">OOPython</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/databas/me/redovisa/me.html">Databas</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/oophp/me/redovisa/htdocs/">OOPHP</a></p>
+
+<p><a href="https://me-angular.nilshollmer.me">JSRamverk</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/vlinux/me/redovisa/me.html">VLinux</a></p>
+";s:7:"excerpt";s:947:"<h4>Me-sidor i tidigare kurser</h4>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/htmlphp/me/kmom06/me6/me.php">HTMLPHP</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/python/me/redovisa/me.html">Python</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/javascript1/me/redovisa/me.php">Javascript</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/design/me/redovisa/htdocs/">Design</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/oopython/me/flask/app.cgi/">OOPython</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/databas/me/redovisa/me.html">Databas</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/oophp/me/redovisa/htdocs/">OOPHP</a></p>
+
+<p><a href="https://me-angular.nilshollmer.me">JSRamverk</a></p>
+
+<p><a href="http://www.student.bth.se/~nihl19/dbwebb-kurser/vlinux/me/redovisa/me.html">VLinux</a></p>
+";}}}s:11:"frontmatter";a:1:{s:5:"title";s:26:"Me-sidor i tidigare kurser";}}
