@@ -27,7 +27,7 @@ class IPValidatorAPIController implements ContainerInjectableInterface
         $page = $this->di->get("page");
 
 
-        $page->add("nihl/ip-validator/api/index",[ ]);
+        $page->add("nihl/ip-validator/api/index", []);
 
         return $page->render([
             "title" => $title
@@ -35,10 +35,8 @@ class IPValidatorAPIController implements ContainerInjectableInterface
     }
 
     /**
-     * This is the index method action, it handles:
+     * This is the index post method action, it handles:
      * POST mountpoint
-     * POST mountpoint/
-     * POST mountpoint/index
      *
      * @return array
      */

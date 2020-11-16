@@ -13,8 +13,6 @@ class ErrorHandlerController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-
-
     /**
      * Add internal routes for 403, 404 and 500 that provides a page with
      * error information, using the default page layout.

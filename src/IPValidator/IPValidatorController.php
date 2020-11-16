@@ -22,12 +22,12 @@ class IPValidatorController implements ContainerInjectableInterface
     {
         $title = "IP-Validator";
 
-        $page = $this->di->get("page");
-        $ip = $this->di->get("request")->getGet("ip", null);
         $ipvalidator = $this->di->get("ipvalidator");
-        
+
+        $ip = $this->di->get("request")->getGet("ip", null);
         $data = $ipvalidator->validateIP($ip);
 
+        $page = $this->di->get("page");
         $page->add("nihl/ip-validator/index", $data);
 
         return $page->render([
