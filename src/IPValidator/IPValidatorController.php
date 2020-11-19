@@ -23,12 +23,17 @@ class IPValidatorController implements ContainerInjectableInterface
         $title = "IP-Validator";
 
         $ipvalidator = $this->di->get("ipvalidator");
+        $userIP = $ipvalidator->getUserIP($this->di->get("request")->getServer());
 
-        $ip = $this->di->get("request")->getGet("ip", null);
+        $geotag = $this->di->get("geotag");
+        $geotagdata = $geotag->getIpData();
+
+        $ip = $this->di->get("request")->getGet("ip", $userIP);
         $data = $ipvalidator->validateIP($ip);
 
         $page = $this->di->get("page");
         $page->add("nihl/ip-validator/index", $data);
+        $page->add("nihl/ip-validator/geotag", [ "data" => $geotagdata]);
 
         return $page->render([
             "title" => $title
