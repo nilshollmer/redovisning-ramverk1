@@ -20,17 +20,6 @@ return [
             "callback" => function () {
                 $curl = new \Nihl\RemoteService\Curl();
 
-                // $cfg = $this->get("configuration");
-                // $config = $cfg->load("geotag.php");
-                // $settings = $config["config"] ?? null;
-                //
-                // if ($settings["url"] ?? null) {
-                //     $geotag->setUrl($settings["url"]);
-                // }
-                //
-                // if ($settings["apikey"] ?? null) {
-                //     $geotag->setApikey($settings["apikey"]);
-                // }
                 return $curl;
             }
         ],
