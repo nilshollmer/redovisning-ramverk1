@@ -30,12 +30,16 @@ class IPValidatorAPIControllerTest extends TestCase
         // Use a different cache dir for unit test
         $this->di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
+        // Set mock as service in the di replacing the original class
+        $this->di->setShared("curl", "\Nihl\RemoteService\CurlMock");
+
         // View helpers uses the global $di so it needs its value
         $di = $this->di;
 
         // Setup the controller
         $this->controller = new IPValidatorAPIController();
         $this->controller->setDI($this->di);
+        $this->controller->initialize();
     }
 
     /**
@@ -43,6 +47,7 @@ class IPValidatorAPIControllerTest extends TestCase
      */
     public function testIndexActionGet()
     {
+        $this->di->get('request')->setServer('REMOTE_ADDR', '172.15.255.255');
         $res = $this->controller->indexActionGet();
         $body = $res->getBody();
         $this->assertStringContainsString("IP-validator Rest API", $body);
@@ -68,11 +73,22 @@ class IPValidatorAPIControllerTest extends TestCase
     {
         $this->di->get("request")->setPost("ip", "172.15.255.255");
         $res = $this->controller->indexActionPost();
-        $this->assertIsArray($res[0]);
-        // $response = $res->getItem("match");
-        $this->assertEquals("Adressen är en giltig ip4-adress!", $res[0]["match"]);
-        $this->assertEquals("172-15-255-255.lightspeed.irvnca.sbcglobal.net", $res[0]["domain"]);
-        // $this->assertStringContainsString("Adressen är en giltig ip4-adress!", $body);
+        $this->assertIsArray($res[0]["validation"]);
+
+        $exp = true;
+        $this->assertEquals($exp, $res[0]["validation"]["match"]);
+
+        $exp = "Adressen är en giltig ip4-adress!";
+        $this->assertEquals($exp, $res[0]["validation"]["message"]);
+
+        $exp = "ipv4";
+        $this->assertEquals($exp, $res[0]["geotag"]["type"]);
+
+        $exp = "https://www.openstreetmap.org/?mlat=33.690269470215&amp;mlon=-117.78993988037#map=6/33.690269470215/-117.78993988037";
+        $this->assertEquals($exp, $res[0]["map"]);
+
+        $exp = "172-15-255-255.lightspeed.irvnca.sbcglobal.net";
+        $this->assertEquals($exp, $res[0]["validation"]["domain"]);
     }
 
     /**
@@ -82,11 +98,17 @@ class IPValidatorAPIControllerTest extends TestCase
     {
         $this->di->get("request")->setPost("ip", "2001:0db8:85a3:0000:0000:8a2e:0370:7334");
         $res = $this->controller->indexActionPost();
-        $this->assertIsArray($res[0]);
-        // $response = $res->getItem("match");
-        $this->assertEquals("Adressen är en giltig ip6-adress!", $res[0]["match"]);
-        $this->assertEquals("2001:0db8:85a3:0000:0000:8a2e:0370:7334", $res[0]["domain"]);
-        // $this->assertStringContainsString("Adressen är en giltig ip4-adress!", $body);
+
+        $this->assertIsArray($res[0]["validation"]);
+
+        $exp = true;
+        $this->assertEquals($exp, $res[0]["validation"]["match"]);
+
+        $exp = "Adressen är en giltig ip6-adress!";
+        $this->assertEquals($exp, $res[0]["validation"]["message"]);
+
+        $exp = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
+        $this->assertEquals("2001:0db8:85a3:0000:0000:8a2e:0370:7334", $res[0]["validation"]["domain"]);
     }
 
     /**
@@ -96,11 +118,14 @@ class IPValidatorAPIControllerTest extends TestCase
     {
         $this->di->get("request")->setPost("ip", "wrong ip");
         $res = $this->controller->indexActionPost();
-        $this->assertIsArray($res[0]);
-        // $response = $res->getItem("match");
-        $this->assertEquals("Adressen är ogiltig!", $res[0]["match"]);
-        $this->assertEquals(null, $res[0]["domain"]);
-        // $this->assertStringContainsString("Adressen är en giltig ip4-adress!", $body);
-    }
+        $this->assertIsArray($res[0]["validation"]);
 
+        $exp = false;
+        $this->assertEquals($exp, $res[0]["validation"]["match"]);
+
+        $exp = "Adressen är ogiltig!";
+        $this->assertEquals($exp, $res[0]["validation"]["message"]);
+
+        $this->assertEquals(null, $res[0]["validation"]["domain"]);
+    }
 }
