@@ -13,6 +13,23 @@ class IPValidatorAPIController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
+    private $ipvalidator;
+    private $request;
+    private $page;
+    private $geotag;
+
+    /**
+     * Initialize method to inject from di
+     *
+     * @return void
+     */
+    public function initialize(): void
+    {
+        $this->ipvalidator = $this->di->get("ipvalidator");
+        $this->request = $this->di->get("request");
+        $this->page = $this->di->get("page");
+        $this->geotag = $this->di->get("geotag");
+    }
     /**
      * This is the index method action, it handles:
      * GET METHOD mountpoint
@@ -24,12 +41,15 @@ class IPValidatorAPIController implements ContainerInjectableInterface
     public function indexActionGet()
     {
         $title = "IP-Validator REST API";
-        $page = $this->di->get("page");
 
+        // Get users IP-address
+        $userIP = $this->ipvalidator->getUserIP($this->request->getServer());
 
-        $page->add("nihl/ip-validator/api/index", []);
+        $this->page->add("nihl/ip-validator/api/index", [
+            "userIP" => $userIP
+        ]);
 
-        return $page->render([
+        return $this->page->render([
             "title" => $title
         ]);
     }
@@ -43,11 +63,25 @@ class IPValidatorAPIController implements ContainerInjectableInterface
     public function indexActionPost()
     {
         $title = "IP-Validator REST API";
-        $ip = $this->di->get("request")->getPost("ip", null);
-        $ipvalidator = $this->di->get("ipvalidator");
 
-        $body = $ipvalidator->validateIP($ip);
-        return [$body];
+        $ipToValidate = $this->request->getPost("ip", null);
+
+        $validation = $this->ipvalidator->validateIP($ipToValidate);
+        $geotagData = $this->geotag->getIPData($ipToValidate);
+
+        $json = [
+            "validation" => $validation
+        ];
+
+        if ($validation["match"] && $validation["type"] == "ip4") {
+            $json["geotag"] = $this->geotag->getIPData($ipToValidate);
+        }
+
+        if (array_key_exists("geotag", $json) && $json["geotag"]["latitude"]) {
+            $json["map"] = $this->geotag->getMap($geotagData["latitude"], $geotagData["longitude"]);
+        }
+
+        return [$json];
     }
 
 
@@ -74,5 +108,4 @@ class IPValidatorAPIController implements ContainerInjectableInterface
 
         return [$data, 400];
     }
-
 }

@@ -13,6 +13,24 @@ class IPValidatorController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
+
+    /**
+     * @var object $ipvalidator instance of IPValidator class
+     */
+    private $ipvalidator;
+
+    /**
+     * Initiate IPValidator
+     *
+     * @return void
+     */
+    public function initialize() : void
+    {
+        // Use to initialise member variables.
+        $this->ipvalidator = $this->di->get("ipvalidator");
+    }
+
+
     /**
      * Display the stylechooser with details on current selected style.
      *
@@ -22,18 +40,28 @@ class IPValidatorController implements ContainerInjectableInterface
     {
         $title = "IP-Validator";
 
+        // Fetch services from di
+        $request = $this->di->get("request");
         $ipvalidator = $this->di->get("ipvalidator");
-        $userIP = $ipvalidator->getUserIP($this->di->get("request")->getServer());
-
-        $geotag = $this->di->get("geotag");
-        $geotagdata = $geotag->getIpData();
-
-        $ip = $this->di->get("request")->getGet("ip", $userIP);
-        $data = $ipvalidator->validateIP($ip);
-
         $page = $this->di->get("page");
+        $geotag = $this->di->get("geotag");
+
+        // Get users IP-address
+        $userIP = $ipvalidator->getUserIP($request->getServer());
+
+        // Set IP to validate, UserIP as default
+        $ipToValidate = $request->getGet("ip", $userIP);
+
+        // Validate ip
+        $data = $ipvalidator->validateIP($ipToValidate);
+
+        // Add location data
+        $geotagdata = $geotag->getIPData($ipToValidate);
+        $geotagdata["map"] = $geotag->renderMap($geotagdata["latitude"], $geotagdata["longitude"]);
+
+        // Add pages to render
         $page->add("nihl/ip-validator/index", $data);
-        $page->add("nihl/ip-validator/geotag", [ "data" => $geotagdata]);
+        $page->add("nihl/ip-validator/geotag", $geotagdata);
 
         return $page->render([
             "title" => $title
@@ -69,5 +97,4 @@ class IPValidatorController implements ContainerInjectableInterface
             "title" => $title
         ]);
     }
-
 }

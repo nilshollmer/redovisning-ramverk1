@@ -7,35 +7,88 @@ use Anax\Commons\ContainerInjectableTrait;
 use Nihl\RemoteService\Curl;
 
 /**
- *
+ * Model class for fetching location data from an ip-address
  */
-class GeoTag implements ContainerInjectableInterface
+class Geotag implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
     /**
-     * $url         Url to access
-     * $apikey      Apikey for ipstack
-     *
+     * $ipDataUrl   Url to access IPData-service
+     * $apikey      Apikey for IPData-service
+     * $mapSiteUrl  Url for creating map, hardcoded to openstreetmap
      */
-    private $url;
+    private $ipDataUrl;
     private $apikey;
-    private $curl;
+    private $mapSiteUrl = "https://www.openstreetmap.org";
 
-    public function setUrl(string $url): void {
-        $this->url = $url;
+    /**
+     * Set ipDataUrl
+     *
+     * @param string $url
+     */
+    public function setUrl(string $url): void
+    {
+        $this->ipDataUrl = $url;
     }
 
-    public function setApikey(string $key): void {
+    /**
+     * Set apiKey
+     *
+     * @param string $key
+     */
+    public function setApikey(string $key): void
+    {
         $this->apikey = $key;
     }
 
-    public function getIPData() {
+    /**
+     * Get JSON-de
+     *
+     * @param string $ip
+     *
+     * @return array Array of data
+     */
+    public function getIPData(string $ip = "")
+    {
         $curl = $this->di->get("curl");
+        $url = $this->createUrl($ip);
 
-        return [
-            "url" => $this->url,
-            "apikey" => $this->apikey
-        ];
+        return json_decode($curl->doRequest($url), true);
+    }
+
+    public function createUrl(string $ip = "")
+    {
+        return "$this->ipDataUrl/$ip?access_key=$this->apikey";
+    }
+
+    public function getMap($latitude, $longitude)
+    {
+        return "$this->mapSiteUrl/?mlat=$latitude&amp;mlon=$longitude#map=6/$latitude/$longitude";
+    }
+
+    public function renderMap($latitude, $longitude)
+    {
+        // Calculate map size
+        $lat1 = $latitude * 0.998;
+        $long1 = $longitude * 0.979;
+        $lat2 = $latitude * 1.002;
+        $long2 = $longitude * 1.017;
+
+        // Create URLs for iframe src and a href
+        $iframeUrl = "$this->mapSiteUrl/export/embed.html?bbox=$long1%2C$lat1%2C$long2%2C$lat2&amp;layer=mapnik&amp;marker=$latitude%2C$longitude";
+        $mapUrl = $this->getMap($latitude, $longitude);
+
+        $mapIframe = <<<EOD
+<iframe width="450px" height="450px" src="$iframeUrl">
+</iframe>
+<br/>
+<small>
+    <a href="$mapUrl">
+        Visa större karta
+    </a>
+</small>
+EOD;
+        return $mapIframe;
     }
 }

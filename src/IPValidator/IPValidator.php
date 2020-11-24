@@ -2,7 +2,6 @@
 
 namespace Nihl\IPValidator;
 
-
 class IPValidator
 {
     /**
@@ -16,7 +15,7 @@ class IPValidator
     {
         if (!empty($server['HTTP_CLIENT_IP'])) {
             $userIP = $server['HTTP_CLIENT_IP'];
-        } elseif(!empty($server['HTTP_X_FORWARDED_FOR'])) {
+        } elseif (!empty($server['HTTP_X_FORWARDED_FOR'])) {
             $userIP = $server['HTTP_X_FORWARDED_FOR'];
         } else {
             $userIP = $server['REMOTE_ADDR'];
@@ -60,13 +59,16 @@ class IPValidator
      */
     public function validateIP($ip)
     {
-        $match = $this->pregMatchIP($ip);
+        $type = $this->pregMatchIP($ip);
+        $match = $type ? true : false;
         $domain = $match ? gethostbyaddr($ip) : null;
+
         return $body = [
             "ip" => $ip,
-            "match" => $match ? "Adressen är en giltig ${match}-adress!" : "Adressen är ogiltig!",
+            "message" => $match ? "Adressen är en giltig ${type}-adress!" : "Adressen är ogiltig!",
+            "match" => $match,
+            "type" => $type,
             "domain" => $domain
         ];
     }
-
 }
