@@ -1,6 +1,7 @@
 <?php
 
 namespace Anax\View;
+
 ?>
 <h1>IP-validator</h1>
 <form class="" action="<?= url("ipvalidator")?>" method="get">
@@ -9,11 +10,17 @@ namespace Anax\View;
     <button type="submit">Test IP</button>
 </form>
 <p>
-    IP: <?= htmlentities($ip) ?>
+    IP: <?= htmlentities($data["ip"]) ?>
 </p>
 <p>
-    Match: <?= $match ?>
+    Resultat: <?= $data["message"] ?>
 </p>
 <p>
-    Domännamn: <?= $domain ?>
+    Match: <?= $data["match"] ?>
+</p>
+<p>
+    Typ: <?= $data["type"] ?>
+</p>
+<p>
+    Domännamn: <?= $data["domain"] ?>
 </p>

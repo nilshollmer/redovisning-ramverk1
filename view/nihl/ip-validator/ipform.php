@@ -1,6 +1,7 @@
 <?php
 
 namespace Anax\View;
+
 $method = $data["method"];
 $url = $data["url"];
 
