@@ -33,7 +33,8 @@ class IPValidatorFailTest extends TestCase
             ["abcdefg"],
             ["1. .3.4"],
             ["192.0.2"],
-            ["123::abcdef"]
+            ["123::abcdef"],
+            [""]
         ];
     }
 

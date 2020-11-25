@@ -43,23 +43,23 @@ class Geotag implements ContainerInjectableInterface
     }
 
     /**
-     * Get JSON-de
+     * Get JSON-formatted data
      *
-     * @param string $ip
+     * @param string $ipAddress
      *
      * @return array Array of data
      */
-    public function getIPData(string $ip = "")
+    public function getIPData(string $ipAddress = "")
     {
         $curl = $this->di->get("curl");
-        $url = $this->createUrl($ip);
+        $url = $this->createUrl($ipAddress);
 
         return json_decode($curl->doRequest($url), true);
     }
 
-    public function createUrl(string $ip = "")
+    public function createUrl(string $ipAddress = "")
     {
-        return "$this->ipDataUrl/$ip?access_key=$this->apikey";
+        return "$this->ipDataUrl/$ipAddress?access_key=$this->apikey";
     }
 
     public function getMap($latitude, $longitude)

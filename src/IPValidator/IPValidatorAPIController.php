@@ -62,8 +62,6 @@ class IPValidatorAPIController implements ContainerInjectableInterface
      */
     public function indexActionPost()
     {
-        $title = "IP-Validator REST API";
-
         $ipToValidate = $this->request->getPost("ip", null);
 
         $validation = $this->ipvalidator->validateIP($ipToValidate);

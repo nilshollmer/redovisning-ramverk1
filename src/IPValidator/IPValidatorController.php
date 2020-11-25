@@ -55,13 +55,17 @@ class IPValidatorController implements ContainerInjectableInterface
         // Validate ip
         $data = $ipvalidator->validateIP($ipToValidate);
 
-        // Add location data
-        $geotagdata = $geotag->getIPData($ipToValidate);
-        $geotagdata["map"] = $geotag->renderMap($geotagdata["latitude"], $geotagdata["longitude"]);
-
-        // Add pages to render
+        // Render index page
         $page->add("nihl/ip-validator/index", $data);
-        $page->add("nihl/ip-validator/geotag", $geotagdata);
+
+        // Add location data and map if it is available
+        $geotagdata = $geotag->getIPData($ipToValidate);
+
+        if (is_array($geotagdata) && $geotagdata["type"]) {
+            $geotagdata["map"] = $geotag->renderMap($geotagdata["latitude"], $geotagdata["longitude"]);
+
+            $page->add("nihl/ip-validator/geotag", $geotagdata);
+        }
 
         return $page->render([
             "title" => $title
