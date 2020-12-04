@@ -30,8 +30,12 @@ class IPValidatorAPIControllerTest extends TestCase
         // Use a different cache dir for unit test
         $this->di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
+
         // Set mock as service in the di replacing the original class
-        $this->di->setShared("curl", "\Nihl\RemoteService\CurlMock");
+        $this->di->setShared("curl", "\Nihl\RemoteService\CurlGeotagMock");
+
+        $this->di->get("geotag")->setUrl("http://testurl.com");
+        $this->di->get("geotag")->setApikey("12345");
 
         // View helpers uses the global $di so it needs its value
         $di = $this->di;

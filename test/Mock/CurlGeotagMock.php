@@ -5,7 +5,7 @@ namespace Nihl\RemoteService;
 /**
  * A mock class for curl
  */
-class CurlMock extends Curl
+class CurlGeotagMock extends Curl
 {
     public function doRequest(string $url)
     {
