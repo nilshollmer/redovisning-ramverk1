@@ -53,9 +53,25 @@ class Geotag implements ContainerInjectableInterface
     {
         $curl = $this->di->get("curl");
         $url = $this->createUrl($ipAddress);
-
         return json_decode($curl->doRequest($url), true);
     }
+
+
+    // /**
+    //  * Filters latitude and longitude from data
+    //  *
+    //  * @param string $ipAddress
+    //  *
+    //  * @return array Array of data
+    //  */
+    // public function getCoordinatesFromIP(string $ipAddress = "")
+    // {
+    //     $data = $this->getIPData($ipAddress);
+    //     return [
+    //         "lat" => $data["latitude"],
+    //         "lon" => $data["longitude"]
+    //     ];
+    // }
 
     public function createUrl(string $ipAddress = "")
     {
