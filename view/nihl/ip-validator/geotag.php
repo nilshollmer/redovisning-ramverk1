@@ -2,7 +2,6 @@
 
 namespace Anax\View;
 
-
 ?>
 
 <h2>Information</h2>
