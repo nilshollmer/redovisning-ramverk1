@@ -30,6 +30,26 @@ return [
                         "url" => "redovisning/kmom02",
                         "title" => "Redovisning för kmom02.",
                     ],
+                    [
+                        "text" => "Kmom03",
+                        "url" => "redovisning/kmom03",
+                        "title" => "Redovisning för kmom03.",
+                    ],
+                    [
+                        "text" => "Kmom04",
+                        "url" => "redovisning/kmom04",
+                        "title" => "Redovisning för kmom04.",
+                    ],
+                    [
+                        "text" => "Kmom05",
+                        "url" => "redovisning/kmom05",
+                        "title" => "Redovisning för kmom05.",
+                    ],
+                    [
+                        "text" => "Kmom06",
+                        "url" => "redovisning/kmom06",
+                        "title" => "Redovisning för kmom06.",
+                    ],
                 ],
             ],
         ],
@@ -58,6 +78,20 @@ return [
                         "text" => "Rest API",
                         "url" => "ipvalidator/api",
                         "title" => "Rest API för validering av IP-adresser"
+                    ],
+                ],
+            ],
+        ],
+        [
+            "text" => "Väder",
+            "url" => "weatherreport",
+            "title" => "Väderrapport",
+            "submenu" => [
+                "items" => [
+                    [
+                        "text" => "Rest API",
+                        "url" => "weatherreport/api",
+                        "title" => "Väderrapports-API"
                     ],
                 ],
             ],
