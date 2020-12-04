@@ -10,13 +10,13 @@ Run `make install` to install necessary dependencies.
 
 
 ## Configuration
-    
-Add file `config/geotag.php` with content of the following format to access ipstack:  
+
+Add file `config/apikey.php` with content of the following format to access ipstack and openweathermap:  
 ```
 <?php
 
-return [
-    "url" => "http://api.ipstack.com",
-    "apikey" => "your_apikey"
+return $apikeys = [
+    "ipstack" => "your_apikey",
+    "openweathermap" => "your_apikey"
 ];
 ```

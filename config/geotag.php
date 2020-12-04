@@ -1,8 +1,11 @@
 <?php
 /**
- * Config file.
+ * Config file for geotag
  */
+
+require __DIR__ . "/apikeys.php";
+
 return [
     "url" => "http://api.ipstack.com",
-    "apikey" => "3fd094c8d4fdc63734276ae7359a884e"
+    "apikey" => $apikeys["ipstack"]
 ];
