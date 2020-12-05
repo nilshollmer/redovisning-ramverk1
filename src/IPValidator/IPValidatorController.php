@@ -32,7 +32,7 @@ class IPValidatorController implements ContainerInjectableInterface
 
 
     /**
-     * Display the stylechooser with details on current selected style.
+     * Index action
      *
      * @return object
      */
